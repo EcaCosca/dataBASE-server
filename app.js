@@ -10,11 +10,12 @@ const cors = require('cors');
 require('dotenv').config();
 
 const authRouter = require('./routes/auth.router');
+const exitRouter = require('./routes/exit.router');
 
 
 // MONGOOSE CONNECTION
 mongoose
-  .connect(process.env.MONGODB_URI, {
+  .connect(`${process.env.MONGODB_URI}`  , {
     keepAlive: true,
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -53,13 +54,14 @@ app.use(
 
 // MIDDLEWARE
 app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // ROUTER MIDDLEWARE
 app.use('/auth', authRouter);
+app.use('/exit', exitRouter);
 
 
 

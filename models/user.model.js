@@ -2,8 +2,12 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-  username: String,
-  password: String,
+  username: {type: String, unique: true},
+  email: {type: String, unique: true},
+  password: {type: String},
+  favorites: [{type: Schema.Types.ObjectId,ref:'Exit'}],
+  userAgreement: {type: Boolean, required: true, default: false}
+
 }, {
   timestamps: {
     createdAt: 'created_at',
