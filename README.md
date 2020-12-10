@@ -117,7 +117,7 @@ Exit model
    landiZoneLat: {type: Number, required: true}
    landingZoneLong: {type: Number, required: true}
    landingZoneDescription: {type: String}
-   loggedByUser: {type: Schema.Types.ObjectId,ref:'User'}
+   creator: {type: Schema.Types.ObjectId,ref:'User'}
    altitud: {type: number}
    
  }
@@ -127,12 +127,18 @@ Exit model
 
 ## Backend routes
 
-| HTTP Method | URL             | Request Body            | Success status | Error Status | Description                                                  |
-| ----------- | --------------- | ----------------------- | -------------- | ------------ | ------------------------------------------------------------ |
-| GET         | `/auth/profile` | Saved session           | 200            | 404          | Check if user is logged in and return profile page           |
-| POST        | `/auth/signup`  | {name, email, password} | 201            | 404          | Checks if fields not empty (422) and user not exists (409), then create user with encrypted password, and store user in session |
-| POST        | `/auth/login`   | {username, password}    | 200            | 401          | Checks if fields not empty (422), if user exists (404), and if password matches (404), then stores user in session |
-| POST        | `/auth/logout`  | (empty)                 | 204            | 400          | Logs out the user                                            |
+| HTTP Method | URL            | Request Body                                                 | Success status | Error Status | Description                                                  |
+| ----------- | -------------- | ------------------------------------------------------------ | -------------- | ------------ | ------------------------------------------------------------ |
+| GET         | `/auth/me`     |                                                              | 200            | 404          | Check if user is logged in and return profile page           |
+| POST        | `/auth/signup` | {name, email, password}                                      | 201            | 404          | Checks if fields not empty (422) and user not exists (409), then create user with encrypted password, and store user in session |
+| POST        | `/auth/login`  | {username, password}                                         | 200            | 401          | Checks if fields not empty (422), if user exists (404), and if password matches (404), then stores user in session |
+| POST        | `/auth/logout` | (empty)                                                      | 204            | 400          | Logs out the user                                            |
+| POST        | /api/exit      | {name, img, aproachLat, aproachLong, aproachDescription, exitLat, exitLong, exitDescription, landingZoneLat, landingZoneLong, landingZoneDescription, altitude} |                |              | Used to create one exit point document, using current logged in user id as a creator. |
+| PUT         | /api/exit/:id  | {name, img, aproachLat, aproachLong, aproachDescription, exitLat, exitLong, exitDescription, landingZoneLat, landingZoneLong, landingZoneDescription, altitude} |                |              | Used to update one exit point document by id                 |
+| GET         | /api/exit/:id  |                                                              |                |              | Used to get one exit point document by id                    |
+| DELETE      | /api/exit/:id  |                                                              |                |              | Used to delete one exit point document by id                 |
+| GET         | /api/user      |                                                              |                |              | Used to get current user's profile. Id of the user is coming form the req.session.currentUser |
+| PUT         | /api/user      | {username, email, password}                                  |                |              | Used to update current user's profile. Id of the user is coming form the req.session.currentUser |
 
 ## Links
 
