@@ -14,14 +14,40 @@ const {
 
 
 
-
+// USER GET ROUTE
 router.get('/user', isLoggedIn, (req, res, next) => {
     const userId = req.session.currentUser._id;
     
 })
 
-router.get('/user', isLoggedIn, (req, res, next) => {
+// USER PUT ROUTE
+router.put('/user', isLoggedIn, (req, res, next) => {
     const userId = req.session.currentUser._id;
+    const {
+        username,
+        password,
+        email,
+        // favorites,
+    } = req.body;
+    
+    // Update user information
+    User.findByIdAndUpdate(userId, {
+        username,
+        password,
+        email,
+        // favorites,
+    }, {new:true} )
+    
+    .then((updatedExit) => {
+        
+            res
+            .status(200)
+            .json(updatedExit);
+            
+        })
+        .catch((err) => {
+            next(createError(err));  //  new Error( { message: err, statusCode: 500 } ) // Internal Server Error
+        });
     
 })
 

@@ -11,6 +11,7 @@ require('dotenv').config();
 
 const authRouter = require('./routes/auth.router');
 const exitRouter = require('./routes/exit.router');
+const userRouter = require('./routes/user.router');
 
 
 // MONGOOSE CONNECTION
@@ -62,6 +63,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 // ROUTER MIDDLEWARE
 app.use('/auth', authRouter);
 app.use('/exit', exitRouter);
+// app.ususerexit'useritRouter);
+app.use('/user', userRouter);
 
 
 
