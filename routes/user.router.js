@@ -29,20 +29,23 @@ router.put('/user', isLoggedIn, (req, res, next) => {
         email,
         // favorites,
     } = req.body;
+    const salt = bcrypt.genSaltSync(saltRounds);
+    const encryptedPassword = bcrypt.hashSync(password, salt);
     
     // Update user information
     User.findByIdAndUpdate(userId, {
         username,
-        password,
+        password: encryptedPassword,
         email,
         // favorites,
     }, {new:true} )
     
-    .then((updatedExit) => {
+    .then((updatedUser) => {
+        updatedUser.password = "*";
         
             res
             .status(200)
-            .json(updatedExit);
+            .json(updatedUser);
             
         })
         .catch((err) => {
