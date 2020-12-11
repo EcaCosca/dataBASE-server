@@ -18,6 +18,17 @@ const {
 router.get('/user', isLoggedIn, (req, res, next) => {
     const userId = req.session.currentUser._id;
     
+    User.findById(userId)
+    .then((user) => {
+        res
+        .status(200) // Found
+        .json(user); // res.send()
+    })
+    .catch((err) => {
+        res
+        .status(500)
+        .jason(err)
+    })
 })
 
 // USER PUT ROUTE

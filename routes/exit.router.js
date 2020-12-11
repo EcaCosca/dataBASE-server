@@ -12,15 +12,6 @@ const {
     validationLogin
 } = require("../helpers/middlewares");
 
-// // GET '/exit/exitpoint'
-// router.get('/exitpoint',  isLoggedIn, (req, res, next) => {
-//     const userId = req.session.currentUser._id;
-
-
-
-// })
-
-
 // POST '/exit/exitpoint'
 router.post('/exitpoint', isLoggedIn, (req, res, next) => {
     const userId = req.session.currentUser._id;
@@ -38,11 +29,6 @@ router.post('/exitpoint', isLoggedIn, (req, res, next) => {
         landingZoneDescription,
         altitude
     } = req.body;
-    
-    
-    
-    
-    
     // Create a new exit point
     Exit.create({
         name,
@@ -60,21 +46,14 @@ router.post('/exitpoint', isLoggedIn, (req, res, next) => {
         creator: userId
     })
     .then((createdExit) => {
-        
         res
         .status(201) // Created
-        .json(createdExit); // res.send()
-        
+        .json(createdExit); // res.send() 
     })
     .catch((err) => {
         next(createError(err));  //  new Error( { message: err, statusCode: 500 } ) // Internal Server Error
     });
-    
-    
-    
-    
 })
-
 
 // GET '/exit/exitpoint'
 router.get('/exitpoint/:id', isLoggedIn, (req, res, next) => {
@@ -92,8 +71,7 @@ router.get('/exitpoint/:id', isLoggedIn, (req, res, next) => {
         res
         .status(200) // Found
         .json(exit); // res.send()
-    }
-    )
+    })
     .catch((err) => {
         res
         .status(500)
