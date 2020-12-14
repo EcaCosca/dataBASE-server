@@ -62,6 +62,7 @@ router.get('/exitpoint', (req, res, next) => {
     
     
     Exit.find()
+    .populate('users')
     .then((allExits) => {
         console.log("all exits", allExits)
         res
@@ -87,7 +88,9 @@ router.get('/exitpoint/:id', (req, res, next) => {
     }
     
     Exit.findById(exitId)
+    
     .then((exit) => {
+        console.log('exit', exit)
         res
         .status(200) // Found
         .json(exit); // res.send()
