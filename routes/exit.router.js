@@ -13,7 +13,7 @@ const {
 } = require("../helpers/middlewares");
 
 // POST '/exit/exitpoint'
-router.post('/exitpoint', isLoggedIn, (req, res, next) => {
+router.post('/exitpoint', (req, res, next) => {
     const userId = req.session.currentUser._id;
     const {
         name,
@@ -29,6 +29,7 @@ router.post('/exitpoint', isLoggedIn, (req, res, next) => {
         landingZoneDescription,
         altitude
     } = req.body;
+    
     // Create a new exit point
     Exit.create({
         name,
@@ -55,8 +56,27 @@ router.post('/exitpoint', isLoggedIn, (req, res, next) => {
     });
 })
 
+
 // GET '/exit/exitpoint'
-router.get('/exitpoint/:id', isLoggedIn, (req, res, next) => {
+router.get('/exitpoint', (req, res, next) => {
+    
+    
+    Exit.find()
+    .then((allExits) => {
+        console.log("all exits", allExits)
+        res
+        .status(200) // Found
+        .json(allExits); // res.send()
+    })
+    .catch((err) => {
+        res
+        .status(500)
+        .jason(err)
+    })
+})
+
+// GET '/exit/exitpoint'
+router.get('/exitpoint/:id', (req, res, next) => {
     const exitId = req.params.id;
     
     if (!mongoose.Types.ObjectId.isValid(exitId)) {
@@ -79,8 +99,9 @@ router.get('/exitpoint/:id', isLoggedIn, (req, res, next) => {
     })
 })
 
+
 // PUT '/exit/exitpoint'
-router.put('/exitpoint/:id', isLoggedIn, (req, res, next) => {
+router.put('/exitpoint/:id', (req, res, next) => {
     const exitId = req.params.id;
     const {
         name,
@@ -129,7 +150,7 @@ router.put('/exitpoint/:id', isLoggedIn, (req, res, next) => {
         
     })
     
-    router.delete('/exitpoint/:id', isLoggedIn, (req, res, next) => {
+    router.delete('/exitpoint/:id', (req, res, next) => {
         const exitId = req.params.id;
         
         Exit.findByIdAndRemove(exitId)

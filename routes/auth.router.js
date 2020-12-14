@@ -14,9 +14,10 @@ const {
 
 // POST '/auth/signup'
 router.post('/signup', isNotLoggedIn, validationLogin, (req, res, next) => {
-  const { username, email, password, userAgreement } = req.body;
+  const { username, password
+     } = req.body;
 
-  User.findOne({ email })
+  User.findOne({ username })
     .then( (foundUser) => {
 
       if (foundUser) {
@@ -28,7 +29,7 @@ router.post('/signup', isNotLoggedIn, validationLogin, (req, res, next) => {
         const salt = bcrypt.genSaltSync(saltRounds);
         const encryptedPassword = bcrypt.hashSync(password, salt);
 
-        User.create( { username, email, password: encryptedPassword, userAgreement })
+        User.create( { username, password: encryptedPassword })
           .then( (createdUser) => {
             // set the `req.session.currentUser` using newly created user object, to trigger creation of the session and cookie
             createdUser.password = "*";
@@ -56,12 +57,12 @@ router.post('/signup', isNotLoggedIn, validationLogin, (req, res, next) => {
 
 // POST '/auth/login'
 router.post('/login', isNotLoggedIn, validationLogin, (req, res, next) => {
-  const { email, password } = req.body;
+  const { username, password } = req.body;
 
-  User.findOne({ email })
+  User.findOne({ username })
     .then( (user) => {
       if (! user) {
-        // If user with that email can't be found, respond with an error
+        // If user with that username can't be found, respond with an error
         return next( createError(404)  );  // Not Found
       }
 
