@@ -4,6 +4,7 @@ const createError = require("http-errors");
 const User = require("../models/user.model");
 const Exit = require("../models/exit.model");
 const mongoose = require("mongoose");
+const uploader = require("./../config/cloudinary-setup");
 
 // HELPER FUNCTIONS
 const {
@@ -11,6 +12,19 @@ const {
     isNotLoggedIn,
     validationLogin
 } = require("../helpers/middlewares");
+
+router.post("/upload", uploader.single("img"), (req, res, next) => {
+    console.log("file is: ", req.file);
+  
+    if (!req.file) {
+      next(new Error("No file uploaded!"));
+      return;
+    }
+    // get secure_url from the file object and save it in the
+    // variable 'secure_url', but this can be any name, just make sure you remember to use the same in frontend
+    res.json({ secure_url: req.file.secure_url });
+  });
+
 
 // POST '/exit/exitpoint'
 router.post('/exitpoint', (req, res, next) => {
@@ -64,7 +78,6 @@ router.get('/exitpoint', (req, res, next) => {
     Exit.find()
     .populate('users')
     .then((allExits) => {
-        console.log("all exits", allExits)
         res
         .status(200) // Found
         .json(allExits); // res.send()
@@ -90,7 +103,7 @@ router.get('/exitpoint/:id', (req, res, next) => {
     Exit.findById(exitId)
     
     .then((exit) => {
-        console.log('exit', exit)
+        
         res
         .status(200) // Found
         .json(exit); // res.send()
@@ -106,9 +119,9 @@ router.get('/exitpoint/:id', (req, res, next) => {
 // PUT '/exit/exitpoint'
 router.put('/exitpoint/:id', (req, res, next) => {
     const exitId = req.params.id;
+    console.log('exitId', exitId)
     const {
         name,
-        img,
         aproachLat,
         aproachLong,
         aproachDescription,
@@ -120,11 +133,10 @@ router.put('/exitpoint/:id', (req, res, next) => {
         landingZoneDescription,
         altitude
     } = req.body;
-    
+    console.log('req.body', req.body)
     // Create a new exit point
     Exit.findByIdAndUpdate(exitId, {
         name,
-        img,
         aproachLat,
         aproachLong,
         aproachDescription,
@@ -138,7 +150,7 @@ router.put('/exitpoint/:id', (req, res, next) => {
     }, {new:true} )
     
     .then((updatedExit) => {
-        
+        console.log('updatedExit', updatedExit)
             res
             .status(200)
             .json(updatedExit);
@@ -161,7 +173,6 @@ router.put('/exitpoint/:id', (req, res, next) => {
             res
             .status(200) // Found
             .json(`Document ${exitId} was removed successfully.`) // res.send()
-            .redirect('/api/home');
         }
         )
         .catch((err) => {

@@ -63,7 +63,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 // ROUTER MIDDLEWARE
 app.use('/auth', authRouter);
 app.use('/exit', exitRouter);
-// app.ususerexit'useritRouter);
 app.use('/user', userRouter);
 
 
