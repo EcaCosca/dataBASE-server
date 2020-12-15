@@ -14,7 +14,7 @@ const {
 
 // POST '/exit/exitpoint'
 router.post('/exitpoint', (req, res, next) => {
-    const userId = req.session.currentUser._id;
+    // const userId = req.session.currentUser._id;
     const {
         name,
         img,
@@ -44,7 +44,7 @@ router.post('/exitpoint', (req, res, next) => {
         landingZoneLong,
         landingZoneDescription,
         altitude,
-        creator: userId
+        // creator: userId
     })
     .then((createdExit) => {
         res
