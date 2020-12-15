@@ -160,7 +160,8 @@ router.put('/exitpoint/:id', (req, res, next) => {
         .then( () => {
             res
             .status(200) // Found
-            .json(`Document ${exitId} was removed successfully.`); // res.send()
+            .json(`Document ${exitId} was removed successfully.`) // res.send()
+            .redirect('/api/home');
         }
         )
         .catch((err) => {
