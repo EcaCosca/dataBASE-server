@@ -16,7 +16,7 @@ const userRouter = require('./routes/user.router');
 
 // MONGOOSE CONNECTION
 mongoose
-  .connect(`${process.env.MONGODB_URI}`  , {
+  .connect(process.env.MONGODB_URI  , {
     keepAlive: true,
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -29,12 +29,14 @@ mongoose
 const app = express();
 
 // CORS MIDDLEWARE SETUP
-app.use(
-  cors({
-    credentials: true,
-    origin: [process.env.PUBLIC_DOMAIN],
-  }),
-);
+app.use(cors({
+  credentials: true,
+  origin: [
+    'http://localhost:3000', 
+    'http://exitpointdatabase.herokuapp.com',         // <-- ADD
+    'https://exitpointdatabase.herokuapp.com/'         // <-- ADD
+  ],
+}));
 
 
 // SESSION MIDDLEWARE
@@ -65,7 +67,11 @@ app.use('/auth', authRouter);
 app.use('/exit', exitRouter);
 app.use('/user', userRouter);
 
-
+// ROUTE FOR SERVING REACT APP (index.html)
+app.use((req, res, next) => {
+  // If no previous routes match the request, send back the React app.
+  res.sendFile(__dirname + "/public/index.html");
+});
 
 // ERROR HANDLING
 //  Catch 404 and respond with error message
