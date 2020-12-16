@@ -10,7 +10,7 @@
 
 ***dataBASE*** is the resource for all BASE jumpers around the world to check the weather conditions of different jumps across the world cross referencing latitude and longitude of exit points and the Windy API
 
-***dataBASE*** has been developed as a part of the final project in [Ironhack](https://www.ironhack.com/es/desarrollo-web/barcelona?utm_source=google-sea&utm_medium=cpc&utm_campaign=BCN_app_campus_brand_GA_ES&utm_term={keywords}&gclid=Cj0KCQjwo6D4BRDgARIsAA6uN19LKsx0pvTH-iUz-RfrGakzau9RGdhJaixWuX32X92njICzz66RYbAaAncuEALw_wcB) Web Developement bootcamp with the [Windy](https://api.windy.com/) API.
+***dataBASE*** has been developed as a part of the final project in [Ironhack](https://www.ironhack.com/es/desarrollo-web/barcelona?utm_source=google-sea&utm_medium=cpc&utm_campaign=BCN_app_campus_brand_GA_ES&utm_term={keywords}&gclid=Cj0KCQjwo6D4BRDgARIsAA6uN19LKsx0pvTH-iUz-RfrGakzau9RGdhJaixWuX32X92njICzz66RYbAaAncuEALw_wcB) Web Developement bootcamp.
 
 ## User Stories
 
