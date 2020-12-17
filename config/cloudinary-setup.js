@@ -17,7 +17,7 @@ cloudinary.config({
     allowedFormats: ['jpg', 'png', 'jpeg', 'gif'],
     // params: { resource_type: 'raw' }, => this is in case you want to upload other type of files, not just images
       //you can preset some properties for the image
-    transformation: [{ width: 500, height: 500, crop: 'limit' }],
+    transformation: [{ width: 500, height: 500, crop: 'l' }],
       //public_id of the file on cloudinary
     filename: function (req, res, cb) {
       let fileName = res.originalname.split(".");
