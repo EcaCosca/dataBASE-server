@@ -15,6 +15,7 @@ const exitSchema = new Schema({
     landingZoneDescription: {type: String},
     creator: {type: Schema.Types.ObjectId,ref:'User'},
     altitude: {type: Number},
+    // checklist: {type: String}
 }, {
   timestamps: {
     createdAt: 'created_at',
